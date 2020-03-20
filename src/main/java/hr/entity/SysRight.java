@@ -12,6 +12,7 @@ public class SysRight {
     private String rightUrl;
 
     private String rightTip;
+    //²âÊÔ2
     
     private SysRole role;
     //°¡¹þ
