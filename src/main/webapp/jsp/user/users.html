@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css"
+	href="../../easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../../easyui/themes/icon.css">
+<script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+<script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+
+<script type="text/javascript">
+	/*
+	 formatter:function (v,r,i){
+			return v.roleName;
+		}
+		v:当前对象
+		r:当行对象
+		i:下标
+		
+		
+		使用Javascript创建下拉列表框。
+
+		<input id="cc" name="dept" value="aa">  
+		$('#cc').combobox({    
+		    url:'combobox_data.json',    
+		    valueField:'id',    
+		    textField:'text'   
+		});
+		
+	 * */
+	$(function() {
+		//动态表格数据
+		$('#dd').datagrid({
+			url : '../../users/selectUsersByUser',
+			fitColumns : true,
+			pagination : true,//显示分页
+			pageNumber : 1,//第一次加载时显示第几页
+			pageSize : 3,//每页显示的条数
+			pageList : [ 1, 2, 3, 4, 5 ],//可以每页显示的条数
+			idField : "uId", //设置返回主键
+			sortName : "uId", //返回按照那一列排序
+			sortOrder : "desc", //排序的方式
+			toolbar : [ {
+				iconCls : 'icon-edit',
+				text : '提交用户信息',
+				handler : function() {
+					//点击添加按钮触发事件，初始化对话框，打开添加模态框
+					$('#roleSelect').combobox({    
+					    url:'../../role/selectAllSysRole',    
+					    valueField:'roleId',    
+					    textField:'roleName',
+					    //loadFilter:function (data){}得到返回来的整个数组对象
+					    loadFilter:function (data){
+					    	var obj={};//new Object();
+					    	obj.roleId=-1;
+					    	obj.roleName="请选择";
+					    	obj.selected=true;//设置selected=true表示选中
+					    	data.splice(0,0,obj); //第一个参数是插入的下标,第二个参数是是否替换，0表示不替换,第三个参数是插入的数据
+					    	return data;
+					    }
+					});
+					$("#insertDiv").dialog("open");
+				}
+			}, '-', {
+				iconCls : 'icon-help',
+				text : '帮助',
+				handler : function() {
+					alert('帮助按钮')
+				}
+			} ],
+			columns : [ [ {
+				field : "uId",
+				title : "编号",
+				width : 5
+			}, {
+				field : "uName",
+				title : "用户名称",
+				width : 5
+			}, {
+				field : "uTrueName",
+				title : "真实姓名",
+				width : 5
+			}, {
+				field : "role",
+				title : "用户身份",
+				width : 5,
+				formatter : function(v, r, i) {
+					return v.roleName;
+				}
+			}, {
+				field : "操作",
+				title : "操作",
+				width : 5,
+				formatter : function(v, r, i) {
+					var id = r.uId;
+					return "<a href='javascript:show("+id+")'>删除</a> <a href='../../users/deteleUser?id="+id+"'>修改</a>";
+				}
+			}
+
+			] ]
+	})
+		
+		
+		//在加载事件中初始化表单信息
+		//url提交的位置
+		// success:function(data){ }接收页面返回的数据
+		$('#insertUser').form({   
+		    url:"../../users/insertUser",   
+		    success:function(data){    
+		       // alert(data); //data就是服务器返回的信息  
+		       if(data==1){
+		    	   //添加成功
+		    	   alert('添加成功');
+		    	   //重置表单
+		    	   $('#insertUser').form("reset");
+		    	   $("#insertDiv").dialog("close");//关闭模态框
+		    	   //刷新页面
+		    	   location.reload();
+		       }
+		    }    
+		});	
+   })
+   
+   
+   //提交用户信息，放在加载事件外
+		function insertUser(){
+			$('#insertUser').submit(); 
+		}
+   //根据id删除
+	    function show(id){
+	    	location.href="../../users/deteleUser";
+	    }
+		
+
+</script>
+
+</head>
+<body>
+	<h3>
+		权限管理模块 <small>用户管理</small>
+	</h3>
+	<br />
+	<!-- 数据表格 -->
+	<table id="dd"></table>
+
+	<!-- 添加对话框
+	             属性： resizable boolean 定义是否可以改变对话框窗口大小。 
+	          modal boolean 定义是否将窗体显示为模式化窗口。 
+	          buttons:[]    定义按钮
+	          closable:false   取消右上角关闭按钮
+	          closed:true      页面加载时关闭对话框
+	          top:30                         距离顶部的位置
+	          保存按钮绑定提交表单
+	 -->
+	<div id="insertDiv" class="easyui-dialog" title="添加用户信息"
+		style="width: 600px; height: 600px;"
+		data-options="top:30,closed:true,iconCls:'icon-save',resizable:false,modal:true,buttons:[{text:'保存',handler:function (){insertUser()}},{text:'取消',handler:function (){resetUserForm()}}]">
+	<!-- 添加表单 -->
+	
+	<form style="margin-top: 20px;" id="insertUser" class="easyui-form"
+			method="post">
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input class="easyui-textbox" name="uName" style="width: 300px"
+					data-options="label:'账号:',required:true">
+			</div>
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input class="easyui-textbox" name="uTrueName" style="width: 300px"
+					data-options="label:'姓名:',required:true">
+			</div>
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input value="123456" readonly="readonly" class="easyui-textbox" name="uPassword" style="width: 300px"
+					data-options="label:'密码:',required:true">
+			</div>
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input id="roleSelect" name="uRoleid" data-options="label:'角色:'"/> 
+			</div>
+		</form>
+	   
+	</div>
+
+</body>
+</html>

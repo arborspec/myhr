@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../easyui/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+		<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+		<link rel="stylesheet" href="../css/bootstrap.css" />
+		<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="../js/bootstrap.js"></script>
+
+		<!--
+			让一个div层浮在最上层
+			position: absolute;
+			要点：如果div较少，如两个div，则可以直接用：style="position: absolute;"
+			而我这里的div较多，且要将下拉框浮在弹框之上，（弹框中有多个div，要将下拉框浮在这些div之上），
+			则需要加入z-index属性；style="position: absolute; z-index: 10"z-index使用详解：
+			首先将position定义为，absolute、relative或fixed。 
+			【必须position为以上三个属性，z-index才能层级体现出来，才能起作用】 设置 style 中 z-index:auto auto可定义为一个值(整数数字)，
+			越大代表越置前，如可定义为： z-index:9999。 若定义为-1，代表为最底层。 如果要让div1不被div2遮挡，
+			则将div1的z-index设置比div2大就可以了。
+
+		-->
+		<style type="text/css">
+			#dd {
+				background-color: beige;
+				width: 295px;
+				height: 495px;
+				margin-top: 132px;
+				position: absolute;
+				margin-left: 54.1%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div align="center" style="width: 100% ;background-color: gold;">
+			<div id="dd">
+				<div class="page-header">
+					<h3>人力资源管理系统 <small>欢迎使用</small></h3><br /><br />
+						<form class="form-inline" action="../users/selectUserByuser" method="post">
+						  <div class="form-group">
+						    <div class="input-group">
+						      <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+						      <input name="uName" value="admin" type="text" class="form-control"  placeholder="用户名">
+						    </div>
+						  </div>
+						
+						   <div class="form-group">
+						    <div class="input-group" style="margin-top: 25px;">
+						      <div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>
+						      <input name="uPassword" value="123456" type="password" class="form-control"  placeholder="密码">
+						    </div>
+						  </div>
+						 
+						  <div class="form-group">
+						    <div class="input-group" style="margin-top: 25px;">
+						      <div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div>
+						      <input type="password" class="form-control"  placeholder="确认密码">
+						    </div>
+						  </div>
+						  
+						  <div style="margin-top: 30px; width: 200px;">
+						  	<button  type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
+						  </div>
+						 
+						</form>
+				</div>
+			</div>
+			<!--设置背景图片-->
+			<img src="../images/hr.jpg" />
+		</div>
+
+	</body>
+
+</html>
