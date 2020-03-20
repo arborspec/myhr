@@ -58,6 +58,11 @@ public class UsersServiceImp implements UsersService{
 	public int deleteUser(int id) {
 		return mapper.deleteByPrimaryKey(id);
 	}
+
+	//根据id查询用户
+	public Users selectUserById(Integer id) {
+		return mapper.selectByPrimaryKey(id);
+	}
 	
 	
 	

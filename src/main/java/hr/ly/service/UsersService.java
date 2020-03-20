@@ -21,4 +21,7 @@ public interface UsersService {
 	
 	//根据id删除用户
 	int deleteUser(int id);
+	
+	//根据id查询单个用户
+	Users selectUserById(Integer id);
 }

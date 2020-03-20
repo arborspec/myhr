@@ -81,7 +81,7 @@ public class UsersController {
 			if (i>0) {
 				out.write("<script>alert('删除成功');location.href='../jsp/user/users.html'</script>");
 			}else {
-				out.write("<script>alert('删除sb');location.href='../jsp/user/users.html'</script>");
+				out.write("<script>alert('删除失败');location.href='../jsp/user/users.html'</script>");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -89,5 +89,15 @@ public class UsersController {
 		}
 		return null;
 	}
-
+	
+	
+	//根据id查询需要修改的对象
+	@RequestMapping("/updateUser")
+	@ResponseBody
+	public Users updateUser(Integer id) {
+		System.out.println(id);
+		Users users = ser.selectUserById(id);
+		System.out.println("查询对象："+users);
+		return null;
+	}
 }

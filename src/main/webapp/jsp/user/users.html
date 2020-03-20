@@ -95,8 +95,8 @@
 				title : "操作",
 				width : 5,
 				formatter : function(v, r, i) {
-					var id = r.uId;
-					return "<a href='javascript:show("+id+")'>删除</a> <a href='../../users/deteleUser?id="+id+"'>修改</a>";
+					var id = r.uId;//<a href='../../users/deteleUser?id="+id+"'>修改</a>
+					return "<a href='javascript:show("+id+")'>删除</a> <a href='../../users/updateUser?id="+id+"'>修改</a>";
 				}
 			}
 
@@ -131,7 +131,7 @@
 		}
    //根据id删除
 	    function show(id){
-	    	location.href="../../users/deteleUser";
+	    	location.href="../../users/deteleUser?id="+id;
 	    }
 		
 
