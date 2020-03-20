@@ -14,7 +14,7 @@ public class SysRight {
     private String rightTip;
     
     private SysRole role;
-    
+    //°¡¹þ
     
 
     public SysRole getRole() {
