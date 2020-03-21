@@ -1,19 +1,16 @@
 package hr.ly.service.imp;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import hr.entity.SysRightRoleExample;
 import hr.entity.SysRightRoleKey;
-import hr.ly.mapper.SysRightRoleMapper;
 import hr.ly.service.SysRightRoleKeyService;
+import hr.mapper.SysRightRoleMapper;
 
 @Service("rightrole")
 public class SysRightRoleKeyServiceImp implements SysRightRoleKeyService{
 
-	@Autowired
+	@Autowired 
 	private SysRightRoleMapper mapper;
 	
 	@Override

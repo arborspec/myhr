@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import hr.entity.Users;
 import hr.entity.UsersExample;
-import hr.ly.mapper.UsersMapper;
 import hr.ly.service.UsersService;
+import hr.mapper.UsersMapper;
 import hr.util.MyPage;
 
 @Service("user")

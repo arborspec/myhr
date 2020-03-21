@@ -87,7 +87,7 @@
 
 	<!-- 自动装配 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="hr.*.mapper"></property>
+		<property name="basePackage" value="hr.mapper"></property>
 	</bean>
 
 </beans>

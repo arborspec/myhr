@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hr.mapper.ConfigMajorKindMapper" >
+  <resultMap id="BaseResultMap" type="hr.entity.ConfigMajorKind" >
+    <id column="mfk_id" property="mfkId" jdbcType="INTEGER" />
+    <result column="major_kind_id" property="majorKindId" jdbcType="CHAR" />
+    <result column="major_kind_name" property="majorKindName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mfk_id, major_kind_id, major_kind_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hr.entity.ConfigMajorKindExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config_major_kind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from config_major_kind
+    where mfk_id = #{mfkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from config_major_kind
+    where mfk_id = #{mfkId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="hr.entity.ConfigMajorKindExample" >
+    delete from config_major_kind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hr.entity.ConfigMajorKind" >
+    insert into config_major_kind (mfk_id, major_kind_id, major_kind_name
+      )
+    values (#{mfkId,jdbcType=INTEGER}, #{majorKindId,jdbcType=CHAR}, #{majorKindName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="hr.entity.ConfigMajorKind" >
+    insert into config_major_kind
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mfkId != null" >
+        mfk_id,
+      </if>
+      <if test="majorKindId != null" >
+        major_kind_id,
+      </if>
+      <if test="majorKindName != null" >
+        major_kind_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mfkId != null" >
+        #{mfkId,jdbcType=INTEGER},
+      </if>
+      <if test="majorKindId != null" >
+        #{majorKindId,jdbcType=CHAR},
+      </if>
+      <if test="majorKindName != null" >
+        #{majorKindName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hr.entity.ConfigMajorKindExample" resultType="java.lang.Integer" >
+    select count(*) from config_major_kind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update config_major_kind
+    <set >
+      <if test="record.mfkId != null" >
+        mfk_id = #{record.mfkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.majorKindId != null" >
+        major_kind_id = #{record.majorKindId,jdbcType=CHAR},
+      </if>
+      <if test="record.majorKindName != null" >
+        major_kind_name = #{record.majorKindName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update config_major_kind
+    set mfk_id = #{record.mfkId,jdbcType=INTEGER},
+      major_kind_id = #{record.majorKindId,jdbcType=CHAR},
+      major_kind_name = #{record.majorKindName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="hr.entity.ConfigMajorKind" >
+    update config_major_kind
+    <set >
+      <if test="majorKindId != null" >
+        major_kind_id = #{majorKindId,jdbcType=CHAR},
+      </if>
+      <if test="majorKindName != null" >
+        major_kind_name = #{majorKindName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mfk_id = #{mfkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hr.entity.ConfigMajorKind" >
+    update config_major_kind
+    set major_kind_id = #{majorKindId,jdbcType=CHAR},
+      major_kind_name = #{majorKindName,jdbcType=VARCHAR}
+    where mfk_id = #{mfkId,jdbcType=INTEGER}
+  </update>
+</mapper>

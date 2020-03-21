@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import hr.entity.SysRight;
 import hr.entity.SysRightExample;
-import hr.ly.mapper.SysRightMapper;
 import hr.ly.service.SysRightService;
+import hr.mapper.SysRightMapper;
+
+
 
 @Service("right")
 public class SysRightServiceImp implements SysRightService {

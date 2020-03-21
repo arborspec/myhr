@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hr.mapper.ConfigMajorDesignationMapper" >
+  <resultMap id="BaseResultMap" type="hr.entity.ConfigMajorDesignation" >
+    <id column="des_id" property="desId" jdbcType="INTEGER" />
+    <result column="des_ffk_id" property="desFfkId" jdbcType="INTEGER" />
+    <result column="des_fsk_id" property="desFskId" jdbcType="INTEGER" />
+    <result column="des_ftk_id" property="desFtkId" jdbcType="INTEGER" />
+    <result column="des_rec_id" property="desRecId" jdbcType="INTEGER" />
+    <result column="des_mfk_id" property="desMfkId" jdbcType="INTEGER" />
+    <result column="des_mak_id" property="desMakId" jdbcType="INTEGER" />
+    <result column="des_num" property="desNum" jdbcType="INTEGER" />
+    <result column="des_expiration_date" property="desExpirationDate" jdbcType="DATE" />
+    <result column="des_user" property="desUser" jdbcType="VARCHAR" />
+    <result column="des_record_date" property="desRecordDate" jdbcType="DATE" />
+    <result column="des_description" property="desDescription" jdbcType="VARCHAR" />
+    <result column="des_require" property="desRequire" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    des_id, des_ffk_id, des_fsk_id, des_ftk_id, des_rec_id, des_mfk_id, des_mak_id, des_num, 
+    des_expiration_date, des_user, des_record_date, des_description, des_require
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hr.entity.ConfigMajorDesignationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config_major_designation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from config_major_designation
+    where des_id = #{desId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from config_major_designation
+    where des_id = #{desId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="hr.entity.ConfigMajorDesignationExample" >
+    delete from config_major_designation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hr.entity.ConfigMajorDesignation" >
+    insert into config_major_designation (des_id, des_ffk_id, des_fsk_id, 
+      des_ftk_id, des_rec_id, des_mfk_id, 
+      des_mak_id, des_num, des_expiration_date, 
+      des_user, des_record_date, des_description, 
+      des_require)
+    values (#{desId,jdbcType=INTEGER}, #{desFfkId,jdbcType=INTEGER}, #{desFskId,jdbcType=INTEGER}, 
+      #{desFtkId,jdbcType=INTEGER}, #{desRecId,jdbcType=INTEGER}, #{desMfkId,jdbcType=INTEGER}, 
+      #{desMakId,jdbcType=INTEGER}, #{desNum,jdbcType=INTEGER}, #{desExpirationDate,jdbcType=DATE}, 
+      #{desUser,jdbcType=VARCHAR}, #{desRecordDate,jdbcType=DATE}, #{desDescription,jdbcType=VARCHAR}, 
+      #{desRequire,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="hr.entity.ConfigMajorDesignation" >
+    insert into config_major_designation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="desId != null" >
+        des_id,
+      </if>
+      <if test="desFfkId != null" >
+        des_ffk_id,
+      </if>
+      <if test="desFskId != null" >
+        des_fsk_id,
+      </if>
+      <if test="desFtkId != null" >
+        des_ftk_id,
+      </if>
+      <if test="desRecId != null" >
+        des_rec_id,
+      </if>
+      <if test="desMfkId != null" >
+        des_mfk_id,
+      </if>
+      <if test="desMakId != null" >
+        des_mak_id,
+      </if>
+      <if test="desNum != null" >
+        des_num,
+      </if>
+      <if test="desExpirationDate != null" >
+        des_expiration_date,
+      </if>
+      <if test="desUser != null" >
+        des_user,
+      </if>
+      <if test="desRecordDate != null" >
+        des_record_date,
+      </if>
+      <if test="desDescription != null" >
+        des_description,
+      </if>
+      <if test="desRequire != null" >
+        des_require,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="desId != null" >
+        #{desId,jdbcType=INTEGER},
+      </if>
+      <if test="desFfkId != null" >
+        #{desFfkId,jdbcType=INTEGER},
+      </if>
+      <if test="desFskId != null" >
+        #{desFskId,jdbcType=INTEGER},
+      </if>
+      <if test="desFtkId != null" >
+        #{desFtkId,jdbcType=INTEGER},
+      </if>
+      <if test="desRecId != null" >
+        #{desRecId,jdbcType=INTEGER},
+      </if>
+      <if test="desMfkId != null" >
+        #{desMfkId,jdbcType=INTEGER},
+      </if>
+      <if test="desMakId != null" >
+        #{desMakId,jdbcType=INTEGER},
+      </if>
+      <if test="desNum != null" >
+        #{desNum,jdbcType=INTEGER},
+      </if>
+      <if test="desExpirationDate != null" >
+        #{desExpirationDate,jdbcType=DATE},
+      </if>
+      <if test="desUser != null" >
+        #{desUser,jdbcType=VARCHAR},
+      </if>
+      <if test="desRecordDate != null" >
+        #{desRecordDate,jdbcType=DATE},
+      </if>
+      <if test="desDescription != null" >
+        #{desDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="desRequire != null" >
+        #{desRequire,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hr.entity.ConfigMajorDesignationExample" resultType="java.lang.Integer" >
+    select count(*) from config_major_designation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update config_major_designation
+    <set >
+      <if test="record.desId != null" >
+        des_id = #{record.desId,jdbcType=INTEGER},
+      </if>
+      <if test="record.desFfkId != null" >
+        des_ffk_id = #{record.desFfkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.desFskId != null" >
+        des_fsk_id = #{record.desFskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.desFtkId != null" >
+        des_ftk_id = #{record.desFtkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.desRecId != null" >
+        des_rec_id = #{record.desRecId,jdbcType=INTEGER},
+      </if>
+      <if test="record.desMfkId != null" >
+        des_mfk_id = #{record.desMfkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.desMakId != null" >
+        des_mak_id = #{record.desMakId,jdbcType=INTEGER},
+      </if>
+      <if test="record.desNum != null" >
+        des_num = #{record.desNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.desExpirationDate != null" >
+        des_expiration_date = #{record.desExpirationDate,jdbcType=DATE},
+      </if>
+      <if test="record.desUser != null" >
+        des_user = #{record.desUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.desRecordDate != null" >
+        des_record_date = #{record.desRecordDate,jdbcType=DATE},
+      </if>
+      <if test="record.desDescription != null" >
+        des_description = #{record.desDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.desRequire != null" >
+        des_require = #{record.desRequire,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update config_major_designation
+    set des_id = #{record.desId,jdbcType=INTEGER},
+      des_ffk_id = #{record.desFfkId,jdbcType=INTEGER},
+      des_fsk_id = #{record.desFskId,jdbcType=INTEGER},
+      des_ftk_id = #{record.desFtkId,jdbcType=INTEGER},
+      des_rec_id = #{record.desRecId,jdbcType=INTEGER},
+      des_mfk_id = #{record.desMfkId,jdbcType=INTEGER},
+      des_mak_id = #{record.desMakId,jdbcType=INTEGER},
+      des_num = #{record.desNum,jdbcType=INTEGER},
+      des_expiration_date = #{record.desExpirationDate,jdbcType=DATE},
+      des_user = #{record.desUser,jdbcType=VARCHAR},
+      des_record_date = #{record.desRecordDate,jdbcType=DATE},
+      des_description = #{record.desDescription,jdbcType=VARCHAR},
+      des_require = #{record.desRequire,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="hr.entity.ConfigMajorDesignation" >
+    update config_major_designation
+    <set >
+      <if test="desFfkId != null" >
+        des_ffk_id = #{desFfkId,jdbcType=INTEGER},
+      </if>
+      <if test="desFskId != null" >
+        des_fsk_id = #{desFskId,jdbcType=INTEGER},
+      </if>
+      <if test="desFtkId != null" >
+        des_ftk_id = #{desFtkId,jdbcType=INTEGER},
+      </if>
+      <if test="desRecId != null" >
+        des_rec_id = #{desRecId,jdbcType=INTEGER},
+      </if>
+      <if test="desMfkId != null" >
+        des_mfk_id = #{desMfkId,jdbcType=INTEGER},
+      </if>
+      <if test="desMakId != null" >
+        des_mak_id = #{desMakId,jdbcType=INTEGER},
+      </if>
+      <if test="desNum != null" >
+        des_num = #{desNum,jdbcType=INTEGER},
+      </if>
+      <if test="desExpirationDate != null" >
+        des_expiration_date = #{desExpirationDate,jdbcType=DATE},
+      </if>
+      <if test="desUser != null" >
+        des_user = #{desUser,jdbcType=VARCHAR},
+      </if>
+      <if test="desRecordDate != null" >
+        des_record_date = #{desRecordDate,jdbcType=DATE},
+      </if>
+      <if test="desDescription != null" >
+        des_description = #{desDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="desRequire != null" >
+        des_require = #{desRequire,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where des_id = #{desId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hr.entity.ConfigMajorDesignation" >
+    update config_major_designation
+    set des_ffk_id = #{desFfkId,jdbcType=INTEGER},
+      des_fsk_id = #{desFskId,jdbcType=INTEGER},
+      des_ftk_id = #{desFtkId,jdbcType=INTEGER},
+      des_rec_id = #{desRecId,jdbcType=INTEGER},
+      des_mfk_id = #{desMfkId,jdbcType=INTEGER},
+      des_mak_id = #{desMakId,jdbcType=INTEGER},
+      des_num = #{desNum,jdbcType=INTEGER},
+      des_expiration_date = #{desExpirationDate,jdbcType=DATE},
+      des_user = #{desUser,jdbcType=VARCHAR},
+      des_record_date = #{desRecordDate,jdbcType=DATE},
+      des_description = #{desDescription,jdbcType=VARCHAR},
+      des_require = #{desRequire,jdbcType=VARCHAR}
+    where des_id = #{desId,jdbcType=INTEGER}
+  </update>
+</mapper>

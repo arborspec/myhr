@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hr.entity.SysRole;
-import hr.ly.mapper.SysRoleMapper;
 import hr.ly.service.SysRoleService;
+import hr.mapper.SysRoleMapper;
 
 @Service("role")
 public class SysRoleServiceImp implements SysRoleService{
