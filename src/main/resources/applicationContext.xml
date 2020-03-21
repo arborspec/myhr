@@ -23,7 +23,7 @@
 
 	<!-- 解析注解的位置 -->
 	<context:component-scan
-		base-package="hr.entity,hr.ly" />
+		base-package="hr.*" />
 
 	<!-- 释放全部的静态资源 -->
 	<mvc:default-servlet-handler />
