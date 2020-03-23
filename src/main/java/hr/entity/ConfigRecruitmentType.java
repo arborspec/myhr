@@ -20,4 +20,13 @@ public class ConfigRecruitmentType {
     public void setRecName(String recName) {
         this.recName = recName == null ? null : recName.trim();
     }
+
+	@Override
+	public String toString() {
+		return "ConfigRecruitmentType [recId=" + recId + ", recName=" + recName + "]";
+	}
+
+	
+    
+    
 }
