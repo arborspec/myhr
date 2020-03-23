@@ -8,4 +8,5 @@ public interface ConfigMajorService {
 
 	//查询所有职位名称
 	public List<ConfigMajor> selectAllMajor();
+	//
 }
