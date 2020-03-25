@@ -60,4 +60,12 @@ public class ConfigMajor {
     public void setTestAmount(Short testAmount) {
         this.testAmount = testAmount;
     }
+
+	@Override
+	public String toString() {
+		return "ConfigMajor [makId=" + makId + ", majorKindId=" + majorKindId + ", majorKindName=" + majorKindName
+				+ ", majorId=" + majorId + ", majorName=" + majorName + ", testAmount=" + testAmount + "]";
+	}
+    
+    
 }

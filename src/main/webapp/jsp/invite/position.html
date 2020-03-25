@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../easyui/themes/icon.css">
+		<script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+
+		<!--填充表格数据 -->
+		<script type="text/javascript">
+			$(function() {
+
+				//招聘类型
+				$('#type').combobox({
+					url: '../../type/selectAllType',
+					valueField: 'recId',
+					textField: 'recName',
+					//loadFilter:function (data){}得到返回来的整个数组对象
+
+					loadFilter: function(data) {
+						var obj = {}; //new Object();
+						obj.recId = -1;
+						obj.recName = "请选择";
+						obj.selected = true; //设置selected=true表示选中
+						data.splice(0, 0, obj); //第一个参数是插入的下标,第二个参数是是否替换，0表示不替换,第三个参数是插入的数据
+						return data;
+					}
+				});
+
+				//得到当前用户和角色
+				$.ajax({
+					async: true,
+					dataType: "json",
+					type: "POST",
+					url: "../../design/selectUserandRole",
+					success: function(data) {
+						console.log(data);
+						$('#u_name').textbox({
+							value: data.user.uName
+						});
+						
+						  var now = new Date();
+						  var year = now.getFullYear();    //得到年份
+						  var month = now.getMonth()+1;    //得到月份
+						  var date = now.getDate();        //得到日期
+						$('#datime').textbox({
+							value: year + "年" + month + "月" + date + "日"
+						});
+						
+						
+					}
+
+				});
+
+			})
+		</script>
+
+	</head>
+
+	<body>
+		<h5>在做的业务是：人力资源--招聘管理--职位发布管理--职位发布登记</h5>
+		<!--表单数据-->
+		<form style="margin-top: 20px;" id="insertUser" class="easyui-form" method="post">
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+
+				<!--一级结构下拉框-->
+				<input id="first" class="easyui-combobox" data-options="label:'I级机构:',
+					url: '../../first/selectAllFirst',
+					valueField: 'firstKindId',
+					textField: 'firstKindName',
+					loadFilter: function(data) {
+						var obj = {};
+						obj.firstKindId = -1;
+						obj.firstKindName = '请选择';
+						obj.selected = true;
+						data.splice(0, 0, obj); 
+						return data;
+					},
+					 onSelect: function(rec){    
+				            var url = '../../second/selectAllSecondById?id=' + rec.firstKindId;  
+				            $('#second').combobox('reload', url);    
+				    }" />
+
+				<!--二级结构下拉框 -->
+				<input id="second" class="easyui-combobox" data-options="
+		        	valueField:'secondKindId',
+		        	textField:'secondKindName',
+		        	loadFilter: function(data) {
+						var obj = {}; 
+						obj.secondKindId = -1;
+						obj.secondKindName = '请选择';
+						obj.selected = true; 
+						data.splice(0, 0, obj);
+						return data;
+					},
+					onSelect: function(rec){    
+				            var url = '../../third/selectAllThirdById?id=' + rec.secondKindId;  
+				           $('#third').combobox('reload', url);
+				    },
+		        	label:'II级机构:'" />
+
+				<!--三级结构下拉框 -->
+				<input id="third" class="easyui-combobox" data-options="
+		        	valueField:'thirdKindId',
+		        	textField:'thirdKindName',
+		        	loadFilter: function(data) {
+						var obj = {}; 
+						obj.thirdKindId = -1;
+						obj.thirdKindName = '请选择';
+						obj.selected = true; 
+						data.splice(0, 0, obj);
+						return data;
+					},
+		        	label:'III级机构:'" />
+
+				<input id="type" data-options="label:'招聘类型:'" />
+			</div>
+
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<!--职业分类和职业名称二级联动-->
+				<input id="cc1" class="easyui-combobox" data-options="    
+				        valueField: 'majorKindId',    
+				        textField: 'majorKindName',    
+				        url: '../../kind/selectAllKind',
+				        loadFilter: function(data) {
+						var obj = {}; 
+						obj.majorKindId = -1;
+						obj.majorKindName = '请选择';
+						obj.selected = true; 
+						data.splice(0, 0, obj); 
+						return data;
+					    },
+				        onSelect: function(rec){    
+				            var url = '../../major/selectMajorById?id=' + rec.majorKindId;  
+				            $('#cc2').combobox('reload', url);    
+				        },
+				        label:'职业分类:'" />
+
+				<input id="cc2" class="easyui-combobox" data-options="
+		        	valueField:'makId',
+		        	textField:'majorName',
+		        	loadFilter: function(data) {
+						var obj = {}; //new Object();
+						obj.makId = -1;
+						obj.majorName = '请选择';
+						obj.selected = true; //设置selected=true表示选中
+						data.splice(0, 0, obj); //第一个参数是插入的下标,第二个参数是是否替换，0表示不替换,第三个参数是插入的数据
+						return data;
+					},
+		        	label:'职业名称:'" />
+				<input type="text" class="easyui-numberbox" data-options="label:'招聘人数',min:0,max:10000"></input>
+				截至日期<input id="dd" type="text" class="easyui-datebox" required="required" />
+
+			</div>
+
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input class="easyui-textbox" id="u_name" name="username" style="width: 300px" data-options="label:'登记人',required:true">
+				<input class="easyui-textbox" id="datime" name="uTrueName"  readonly="readonly" style="width: 300px;" data-options="label:'登记日期',required:true">
+			</div>
+
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input class="easyui-textbox" name="uTrueName" style="width: 1210px;height: 120px;" data-options="label:'职业描述',required:true">
+			</div>
+
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input class="easyui-textbox" name="uTrueName" style="width: 1210px;height: 120px;" data-options="label:'招聘要求',required:true">
+			</div>
+
+		</form>
+
+	</body>
+
+</html>

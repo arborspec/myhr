@@ -40,7 +40,6 @@ public class UsersServiceImp implements UsersService{
     //查询一共有多少条数据
 	@Override
 	public Integer selectUserCount() {
-		//逆向工厂查询总条数mapper.countByExample(null);
 		int a=mapper.countByExample(null);
 		System.out.println("总条数："+a);
 		return a;

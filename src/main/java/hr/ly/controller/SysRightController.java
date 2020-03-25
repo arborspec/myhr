@@ -54,6 +54,7 @@ public class SysRightController {
 		Users user = (Users) sess.getAttribute("user");
 		//得到当前用户的角色
 		SysRole userrole = role.selectSysRoleById(user.getuRoleid());
+		sess.setAttribute("role", userrole);
 		//得到用户角色的权限集合
 		List<SysRight> rightlist = ser.selectAllSysRightByUser(userrole.getRoleId());
 
