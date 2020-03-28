@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+
+
+<link rel="stylesheet" href="../../css/bootstrap.css" />
+<script type="text/javascript" src="../../js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.js"></script>
+
+<!--  bootstrap兼容问题和easyui的bug
+        	    解决，将bootstrap先引入，则后引入的easy UI布局生效
+        	 -->
+<link rel="stylesheet" type="text/css"
+	href="../../easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../../easyui/themes/icon.css">
+<script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+<script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../easyui/easyui-lang-zh_CN.js"></script>
+
+<style type="text/css">
+</style>
+
+<script type="text/javascript">
+	$(function() {
+		//动态表格数据
+		$('#dd').datagrid(
+						{
+							url : '../../design/selectConfigDesignation',
+							fitColumns : true,
+							pagination : true, //显示分页
+							pageNumber : 1, //第一次加载时显示第几页
+							pageSize : 1, //每页显示的条数
+							pageList : [ 1, 2, 3, 4, 5 ], //可以每页显示的条数
+							idField : "desId", //设置返回主键
+							sortName : "desId", //返回按照那一列排序
+							sortOrder : "desc", //排序的方式
+							columns : [ [
+									{
+										field : "desId",
+										title : "编号",
+										width : 5
+									},
+									{
+										field : "major",
+										title : "机构名称",
+										width : 5,
+										formatter : function(v, r, i) {
+											return v.majorName;
+										}
+									},
+									{
+										field : "second",
+										title : "职位名称",
+										width : 5,
+										formatter : function(v, r, i) {
+											return v.secondKindName;
+										}
+									},
+									{
+										field : "desNum",
+										title : "招聘人数",
+										width : 5
+									},
+									{
+										field : "申请职位",
+										title : "申请职位",
+										width : 5,
+										formatter : function(v, r, i) {
+											var id = r.desId; //<a href='../../users/deteleUser?id="+id+"'>修改</a>
+											return "<button type='button' onclick='selectC("
+													+ id
+													+ ")' data-toggle='modal' data-target='#myModal' class='btn btn-danger btn-sm'>申请该职位</button>";
+										}
+									}
+
+							] ]
+						})
+
+		//招聘类型
+		$('#type').combobox({
+			url : '../../type/selectAllType',
+			valueField : 'recId',
+			textField : 'recName',
+			//loadFilter:function (data){}得到返回来的整个数组对象
+
+			loadFilter : function(data) {
+				var obj = {}; //new Object();
+				obj.recId = -1;
+				obj.recName = "请选择";
+				obj.selected = true; //设置selected=true表示选中
+				data.splice(0, 0, obj); //第一个参数是插入的下标,第二个参数是是否替换，0表示不替换,第三个参数是插入的数据
+				return data;
+			}
+		});
+
+	})
+
+
+	//查询方法
+	function selectC(id) {
+		$.get(
+				"../../design/selectConfigDesignationById",
+				{"id":id},
+				function(data){
+				   console.log(data);
+				   document.getElementsByName("desId")[0].value=data.desId;
+				   document.getElementsByName("desExpirationDate")[0].value=data.desExpirationDate;
+				   document.getElementsByName("desRecordDate")[0].value=data.desRecordDate;
+				   document.getElementsByName("desNum")[0].value=data.desNum;
+				   document.getElementsByName("desUser")[0].value=data.desUser;
+				   document.getElementsByName("desDescription")[0].innerText=data.desDescription;
+				   document.getElementsByName("desRequire")[0].innerText=data.desRequire;
+				   
+				   //easyUl下拉框赋值
+				   $("#first").combobox("setValue",data.desFfkId);
+				   $("#second").combobox("setValue",data.second.fskId);
+				   $("#third").combobox("setValue",data.desFtkId);
+				  
+				   $("#desMfkId").combobox("setValue",data.desMfkId);
+				   $("#desMakId").combobox("setValue",data.desMakId);
+				   $("#type").combobox("setValue",data.desFtkId);
+				   //easyUl时间控件赋值
+
+				 }
+			);
+	}
+	
+	
+
+	
+</script>
+</head>
+
+<body>
+	<!-- 修改模态框 -->
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<!--  设置这个模态框的大 -->
+		<div class="modal-dialog" role="document" style="width: 1200px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">修改职位信息</h4>
+				</div>
+				<div class="modal-body">
+					<!--  设置这个div的大小，超出部分显示滚动条 -->
+					<div id="selectTree" class="ztree"
+						style="height: 450px; width: 100%; overflow: auto;">
+						
+					
+						<!--隐藏id-->
+						<input type="text" name="desId" hidden="hidden"/>
+						<table class="table table-bordered" style="width: 100%">
+							<tr>
+								<th>I级机构</th>
+								<td>
+									<!--一级结构下拉框--> <input id="first" readonly="readonly" name="desFfkId"
+									class="easyui-combobox"
+									data-options="
+									url: '../../first/selectAllFirst',
+									valueField: 'ffkId',
+									textField: 'firstKindName',
+									loadFilter: function(data) {
+										var obj = {};
+										obj.ffkId = -1;
+										obj.firstKindName = '请选择';
+										obj.selected = true;
+										data.splice(0, 0, obj); 
+										return data;
+									},
+									 onSelect: function(rec){    
+									        console.log(rec);
+								            var url = '../../second/selectAllSecondById?id=' + rec.firstKindId;  
+								            $('#second').combobox('reload', url);    
+								    }" />
+								</td>
+								<td>II级机构</td>
+								<td><input id="second" readonly="readonly" name="desFskId"
+									class="easyui-combobox"
+									data-options="
+						        	valueField:'fskId',
+						        	textField:'secondKindName',
+						        	
+									onSelect: function(rec){    
+								            var url = '../../third/selectAllThirdById?id=' + rec.secondKindId;  
+								           $('#third').combobox('reload', url);
+								    }" />
+								</td>
+								<td>III级机构</td>
+								<td><input readonly="readonly" id="third" name="desFtkId"
+									class="easyui-combobox"
+									data-options="
+						        	valueField:'ftkId',
+						        	textField:'thirdKindName'" />
+								</td>
+								<th>招聘类型</th>
+								<td><input readonly="readonly" class="easyui-combobox" name="desRecId" id="type"/></td>
+							</tr>
+							<tr>
+								<th>职位分类</th>
+								<td><input readonly="readonly" id="desMfkId" name="desMfkId" class="easyui-combobox"
+									data-options="    
+							        valueField: 'mfkId',    
+							        textField: 'majorKindName',    
+							        url: '../../kind/selectAllKind',
+							        onSelect: function(rec){    
+							            var url = '../../major/selectMajorById?id=' + rec.majorKindId;  
+							            $('#desMakId').combobox('reload', url);    
+							        }" />
+								</td>
+								<th>职业名称</th>
+								<td><input readonly="readonly" id="desMakId" name="desMakId" class="easyui-combobox"
+									data-options="
+						        	valueField:'makId',
+						        	textField:'majorName'" />
+								</td>
+								
+							</tr>
+
+							<tr>
+								<th>招聘人数</th>
+								<td><input readonly="readonly" name="desNum" type="text" class="form-control"  placeholder="Jane Doe"></td>
+								<th>截止日期</th>
+								<td><input readonly="readonly" type="text" class="form-control" name="desExpirationDate" placeholder="Jane Doe"></td>
+								<th>变更人</th>
+								<td><input readonly="readonly" name="desUser" type="text" class="form-control"  placeholder="Jane Doe"></td>
+								<th>变更时间</th>
+								<td><input readonly="readonly" name="desRecordDate" class="form-control" type="text"  placeholder="Jane Doe"></td>
+							</tr>
+
+							<tr>
+								<th>职位描述</th>
+								<td colspan="7"><textarea readonly="readonly" name="desDescription" class="form-control" rows="6"></textarea></td>
+							</tr>
+
+							<tr>
+								<th>职位请求</th>
+								<td colspan="7"><textarea readonly="readonly" name="desRequire" class="form-control" rows="6"></textarea></td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<input type="submit" class="btn btn-primary" value="确定申请">
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	<!-- 数据表格 -->
+	<table id="dd"></table>
+</body>
+
+</html>

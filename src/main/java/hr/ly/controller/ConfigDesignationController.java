@@ -24,7 +24,7 @@ import hr.entity.Users;
 import hr.ly.service.ConfigDesignationService;
 import hr.util.MyPage;
 
-
+//Ìá½»×¢ÊÍ
 @Controller
 @RequestMapping("/design")
 public class ConfigDesignationController {

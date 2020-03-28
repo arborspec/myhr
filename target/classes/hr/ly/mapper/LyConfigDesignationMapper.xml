@@ -1,0 +1,40 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hr.ly.mapper.LyConfigDesignationMapper">
+    
+    <!-- 添加职位 -->
+    <insert id="insertConfigDesignation">
+      INSERT INTO config_major_designation VALUES (DEFAULT,#{desFfkId},#{desFskId},#{desFtkId}, #{desRecId}, #{desMfkId}, #{desMakId}, #{desNum}, #{desExpirationDate}, #{desUser}, #{desRecordDate}, #{desDescription}, #{desRequire});
+    </insert>
+    
+    <!-- 查询职位表，二级结构表，职位名称表 -->
+    <resultMap type="hr.entity.ConfigMajorDesignation" id="selectthireDes" extends="hr.mapper.ConfigMajorDesignationMapper.BaseResultMap">
+         <association property="second" resultMap="hr.mapper.ConfigFileSecondKindMapper.BaseResultMap"></association>
+         <association property="major" resultMap="hr.mapper.ConfigMajorMapper.BaseResultMap"></association>
+    </resultMap>
+    
+    <!-- 查询相关职位 -->
+    <select id="selectConfigDesignation" resultMap="selectthireDes" >
+        select des.des_id,ma.major_name,sec.second_kind_name,des.des_num,des.des_record_date,des.des_expiration_date from config_major_designation des inner join config_file_second_kind sec on des.des_fsk_id=sec.fsk_id
+        inner join config_major ma on des.des_mak_id=ma.mak_id
+        <if test="page!=null and rows!=null">
+          <bind name="pp" value="(page-1)*rows"/>
+            limit #{pp},#{rows}
+        </if>
+    </select>
+    
+    <!-- 根据id查询相关职位 -->
+      <resultMap type="hr.entity.ConfigMajorDesignation" id="selectfourDes" extends="hr.mapper.ConfigMajorDesignationMapper.BaseResultMap">
+         <association property="second" resultMap="hr.mapper.ConfigFileSecondKindMapper.BaseResultMap"></association>
+         <association property="major" resultMap="hr.mapper.ConfigMajorMapper.BaseResultMap"></association>
+         <association property="type" resultMap="hr.mapper.ConfigRecruitmentTypeMapper.BaseResultMap"></association>
+    </resultMap>
+    
+    
+    <select id="selectConfigDesignationById" resultMap="selectfourDes" >
+       select * from config_major_designation des inner join config_file_second_kind sec on des.des_fsk_id=sec.fsk_id
+       inner join config_major ma on des.des_mak_id=ma.mak_id inner join config_recruitment_type ty on des.des_rec_id=ty.rec_id  where des.des_id=#{id}  
+    </select>
+    
+    
+
+</mapper>
