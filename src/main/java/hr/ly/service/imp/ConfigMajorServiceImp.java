@@ -24,11 +24,9 @@ public class ConfigMajorServiceImp implements ConfigMajorService {
 
 	//根据职位类型查询相应的职位名称
 	@Override
-	public List<ConfigMajor> selectMajorById(Integer id) {
+	public List<ConfigMajor> selectMajorById(String id) {
 		ConfigMajorExample example=new ConfigMajorExample();
-		String idd="0"+id;
-		System.out.println(id);
-		example.createCriteria().andMajorKindIdEqualTo(idd);
+		example.createCriteria().andMajorKindIdEqualTo(id);
 		return mapper.selectByExample(example);
 	}
 

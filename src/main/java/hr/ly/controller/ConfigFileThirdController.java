@@ -19,10 +19,8 @@ public class ConfigFileThirdController {
 	
 	@RequestMapping("/selectAllThirdById")
 	@ResponseBody
-	public List<ConfigFileThirdKind> selectAllThirdById(Integer id){
-		System.out.println("thirdid:"+id);
+	public List<ConfigFileThirdKind> selectAllThirdById(String id){
 		List<ConfigFileThirdKind> list = thirdser.selectAllThirdById(id);
-		System.out.println(list.toString());
 		return list;
 	}
 }

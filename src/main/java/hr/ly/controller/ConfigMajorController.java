@@ -20,8 +20,7 @@ public class ConfigMajorController {
 	//根据职位类型查询相应的职位名称	
 	@RequestMapping("/selectMajorById")
 	@ResponseBody
-	public List<ConfigMajor> selectMajorById(Integer id){
-		System.out.println("id:"+id);
+	public List<ConfigMajor> selectMajorById(String id){
 		List<ConfigMajor> list = majorser.selectMajorById(id);
 		System.out.println(list.toString());
 		return list;

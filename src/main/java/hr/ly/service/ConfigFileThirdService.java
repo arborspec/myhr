@@ -6,5 +6,5 @@ import hr.entity.ConfigFileThirdKind;
 
 public interface ConfigFileThirdService {
 
-	public List<ConfigFileThirdKind> selectAllThirdById(Integer id);
+	public List<ConfigFileThirdKind> selectAllThirdById(String id);
 }

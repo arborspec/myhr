@@ -20,8 +20,7 @@ public class ConfigSecondController {
 	
 	@RequestMapping("/selectAllSecondById")
 	@ResponseBody
-	public List<ConfigFileSecondKind>selectAllSecondById(Integer id){
-		System.out.println("二级结构需要id："+id);
+	public List<ConfigFileSecondKind>selectAllSecondById(String id){
 		List<ConfigFileSecondKind> list = ser.selectAllSecondById(id);
 		return list;
 	}

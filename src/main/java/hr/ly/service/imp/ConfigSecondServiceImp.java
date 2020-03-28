@@ -18,11 +18,9 @@ public class ConfigSecondServiceImp implements ConfigSecondService {
 	
 	//根据一级结构id查询二级结构
 	@Override
-	public List<ConfigFileSecondKind> selectAllSecondById(Integer id) {
+	public List<ConfigFileSecondKind> selectAllSecondById(String id) {
 		ConfigFileSecondKindExample example=new ConfigFileSecondKindExample();
-		String idd="0"+id;
-		System.out.println("idd:"+idd);
-		example.createCriteria().andFirstKindIdEqualTo(idd);
+		example.createCriteria().andFirstKindIdEqualTo(id);
 		return mapper.selectByExample(example);
 	}
 

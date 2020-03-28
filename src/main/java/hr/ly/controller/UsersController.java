@@ -29,7 +29,6 @@ public class UsersController {
 	//当前用户的登录
 	@RequestMapping("/selectUserByuser")
 	public String selectUserByuser(HttpSession sess, HttpServletResponse resp, Users user) {
-		System.out.println("用户对象：" + user.toString());
 		Users u = ser.selectUsersByUser(user);
 		resp.setContentType("text/html;charset=utf-8");
 		try {

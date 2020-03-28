@@ -25,7 +25,6 @@ public class ConfigFileFirstController {
 		public List<ConfigFileFirstKind> selectAllFirst(){
 			//查询所有一级对象
 			List<ConfigFileFirstKind> firstdate = firstser.selectAllFirs();
-			System.out.println("一级对象："+firstdate);
 			return firstdate;
 		}
 }

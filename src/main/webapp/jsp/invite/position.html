@@ -39,24 +39,44 @@
 					url: "../../design/selectUserandRole",
 					success: function(data) {
 						console.log(data);
-						$('#u_name').textbox({
+						$('#username').textbox({
 							value: data.user.uName
 						});
-						
-						  var now = new Date();
-						  var year = now.getFullYear();    //得到年份
-						  var month = now.getMonth()+1;    //得到月份
-						  var date = now.getDate();        //得到日期
+
+						var now = new Date();
+						var year = now.getFullYear(); //得到年份
+						var month = now.getMonth() + 1; //得到月份
+						var date = now.getDate(); //得到日期
 						$('#datime').textbox({
-							value: year + "年" + month + "月" + date + "日"
+							value: year + "-" + month + "-" + date
 						});
-						
-						
+
 					}
 
 				});
 
-			})
+			
+			});
+				//在加载事件中初始化表单信息
+				//url提交的位置
+				// success:function(data){ }接收页面返回的数据
+			/* 	$('#insertDesignation').form({
+					url: "../../design/insertConfigDesignation",
+					success: function(data) {
+						// alert(data); //data就是服务器返回的信息  
+						
+					}
+				});
+			 */
+			
+			
+			 //提交用户信息，放在加载事件外
+			function insertDes(){
+				return true;
+			}
+
+			
+
 		</script>
 
 	</head>
@@ -64,34 +84,35 @@
 	<body>
 		<h5>在做的业务是：人力资源--招聘管理--职位发布管理--职位发布登记</h5>
 		<!--表单数据-->
-		<form style="margin-top: 20px;" id="insertUser" class="easyui-form" method="post">
+		<form style="margin-top: 20px;" action="../../design/insertConfigDesignation" id="insertDesignation" method="post" onsubmit="return insertDes()">
 			<div style="margin-bottom: 20px; margin-left: 30px;">
 
 				<!--一级结构下拉框-->
-				<input id="first" class="easyui-combobox" data-options="label:'I级机构:',
+				<input id="first" name="desFfkId" class="easyui-combobox" data-options="label:'I级机构:',
 					url: '../../first/selectAllFirst',
-					valueField: 'firstKindId',
+					valueField: 'ffkId',
 					textField: 'firstKindName',
 					loadFilter: function(data) {
 						var obj = {};
-						obj.firstKindId = -1;
+						obj.ffkId = -1;
 						obj.firstKindName = '请选择';
 						obj.selected = true;
 						data.splice(0, 0, obj); 
 						return data;
 					},
 					 onSelect: function(rec){    
+					        console.log(rec);
 				            var url = '../../second/selectAllSecondById?id=' + rec.firstKindId;  
 				            $('#second').combobox('reload', url);    
 				    }" />
 
 				<!--二级结构下拉框 -->
-				<input id="second" class="easyui-combobox" data-options="
-		        	valueField:'secondKindId',
+				<input id="second" name="desFskId" class="easyui-combobox" data-options="
+		        	valueField:'fskId',
 		        	textField:'secondKindName',
 		        	loadFilter: function(data) {
 						var obj = {}; 
-						obj.secondKindId = -1;
+						obj.fskId = -1;
 						obj.secondKindName = '请选择';
 						obj.selected = true; 
 						data.splice(0, 0, obj);
@@ -104,12 +125,12 @@
 		        	label:'II级机构:'" />
 
 				<!--三级结构下拉框 -->
-				<input id="third" class="easyui-combobox" data-options="
-		        	valueField:'thirdKindId',
+				<input id="third" name="desFtkId" class="easyui-combobox" data-options="
+		        	valueField:'ftkId',
 		        	textField:'thirdKindName',
 		        	loadFilter: function(data) {
 						var obj = {}; 
-						obj.thirdKindId = -1;
+						obj.ftkId = -1;
 						obj.thirdKindName = '请选择';
 						obj.selected = true; 
 						data.splice(0, 0, obj);
@@ -117,18 +138,18 @@
 					},
 		        	label:'III级机构:'" />
 
-				<input id="type" data-options="label:'招聘类型:'" />
+				<input name="desRecId" id="type" data-options="label:'招聘类型:'" />
 			</div>
 
 			<div style="margin-bottom: 20px; margin-left: 30px;">
 				<!--职业分类和职业名称二级联动-->
-				<input id="cc1" class="easyui-combobox" data-options="    
-				        valueField: 'majorKindId',    
+				<input id="cc1" name="desMfkId" class="easyui-combobox" data-options="    
+				        valueField: 'mfkId',    
 				        textField: 'majorKindName',    
 				        url: '../../kind/selectAllKind',
 				        loadFilter: function(data) {
 						var obj = {}; 
-						obj.majorKindId = -1;
+						obj.mfkId = -1;
 						obj.majorKindName = '请选择';
 						obj.selected = true; 
 						data.splice(0, 0, obj); 
@@ -140,7 +161,7 @@
 				        },
 				        label:'职业分类:'" />
 
-				<input id="cc2" class="easyui-combobox" data-options="
+				<input id="cc2" name="desMakId" class="easyui-combobox" data-options="
 		        	valueField:'makId',
 		        	textField:'majorName',
 		        	loadFilter: function(data) {
@@ -152,22 +173,27 @@
 						return data;
 					},
 		        	label:'职业名称:'" />
-				<input type="text" class="easyui-numberbox" data-options="label:'招聘人数',min:0,max:10000"></input>
-				截至日期<input id="dd" type="text" class="easyui-datebox" required="required" />
+
+				<input name="desNum" type="text" class="easyui-numberbox" data-options="label:'招聘人数',min:0,max:10000"></input>
+				截至日期<input id="dd" name="desExpirationDate" class="easyui-datebox" required="required" />
 
 			</div>
 
 			<div style="margin-bottom: 20px; margin-left: 30px;">
-				<input class="easyui-textbox" id="u_name" name="username" style="width: 300px" data-options="label:'登记人',required:true">
-				<input class="easyui-textbox" id="datime" name="uTrueName"  readonly="readonly" style="width: 300px;" data-options="label:'登记日期',required:true">
+				登记人<input id="username" name="desUser" readonly="readonly">
+				<input class="easyui-textbox" id="datime" name="desRecordDate" readonly="readonly" style="width: 300px;" data-options="label:'登记日期',required:true">
 			</div>
 
 			<div style="margin-bottom: 20px; margin-left: 30px;">
-				<input class="easyui-textbox" name="uTrueName" style="width: 1210px;height: 120px;" data-options="label:'职业描述',required:true">
+				<div><label style="hyphenate-limit-lines;">职业描述:</label></div>
+				<textarea name="desDescription" style="margin-left: 80px;"  rows=7 cols=90 class="textarea easyui-validatebox"></textarea>
 			</div>
-
 			<div style="margin-bottom: 20px; margin-left: 30px;">
-				<input class="easyui-textbox" name="uTrueName" style="width: 1210px;height: 120px;" data-options="label:'招聘要求',required:true">
+				<div><label  style="margin-top: -20px;">招聘要求:</label></div>
+				<textarea rows="7" cols="90" name="desRequire"></textarea>
+			</div>
+			<div style="margin-bottom: 20px; margin-left: 30px;">
+				<input type="submit" value="提交信息"> 
 			</div>
 
 		</form>

@@ -36,7 +36,6 @@ public class SysRightController {
 	
 	@RequestMapping("/selectAllSysRight")
 	public List<SysRight> selectAllSysRight(){
-		System.out.println("我是controller："+ser.selectAllSysRight());
 		return null;
 	}
 	
@@ -45,7 +44,6 @@ public class SysRightController {
 	@ResponseBody // 把返回的数据转成JSON
 	public List<Map<String,Object>> selectAllSysRightByUser(HttpSession sess,Integer id){
 		//得到界面父节点的id
-		System.out.println("id：" + id);
 		if(id==null) {
 			id=0;
 		}

@@ -2,6 +2,9 @@ package hr.entity;
 
 import java.util.Date;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ConfigMajorDesignation {
     private Integer desId;
 
@@ -18,18 +21,56 @@ public class ConfigMajorDesignation {
     private Integer desMakId;
 
     private Integer desNum;
-
+   //标签形式处理json中的日期格式
+  	@JsonFormat(pattern="yyyy-MM-dd")
     private Date desExpirationDate;
 
     private String desUser;
-
+    //标签形式处理json中的日期格式
+  	@JsonFormat(pattern="yyyy-MM-dd")
     private Date desRecordDate;
 
     private String desDescription;
 
     private String desRequire;
+    
+    //二级结构对象
+    private ConfigFileSecondKind second;
 
-    public Integer getDesId() {
+    //职业名称表
+    private ConfigMajor major;
+    
+    //招聘类型表
+    private ConfigRecruitmentType type;
+    
+    
+    
+    
+    public ConfigRecruitmentType getType() {
+		return type;
+	}
+
+	public void setType(ConfigRecruitmentType type) {
+		this.type = type;
+	}
+
+	public ConfigFileSecondKind getSecond() {
+		return second;
+	}
+
+	public void setSecond(ConfigFileSecondKind second) {
+		this.second = second;
+	}
+
+	public ConfigMajor getMajor() {
+		return major;
+	}
+
+	public void setMajor(ConfigMajor major) {
+		this.major = major;
+	}
+
+	public Integer getDesId() {
         return desId;
     }
 
@@ -132,4 +173,36 @@ public class ConfigMajorDesignation {
     public void setDesRequire(String desRequire) {
         this.desRequire = desRequire == null ? null : desRequire.trim();
     }
+
+	@Override
+	public String toString() {
+		return "ConfigMajorDesignation [desId=" + desId + ", desFfkId=" + desFfkId + ", desFskId=" + desFskId
+				+ ", desFtkId=" + desFtkId + ", desRecId=" + desRecId + ", desMfkId=" + desMfkId + ", desMakId="
+				+ desMakId + ", desNum=" + desNum + ", desExpirationDate=" + desExpirationDate + ", desUser=" + desUser
+				+ ", desRecordDate=" + desRecordDate + ", desDescription=" + desDescription + ", desRequire="
+				+ desRequire + "]";
+	}
+
+	public ConfigMajorDesignation(Integer desFfkId, Integer desFskId, Integer desFtkId, Integer desRecId,
+			Integer desMfkId, Integer desMakId, Integer desNum, Date desExpirationDate, String desUser,
+			Date desRecordDate, String desDescription, String desRequire) {
+		super();
+		this.desFfkId = desFfkId;
+		this.desFskId = desFskId;
+		this.desFtkId = desFtkId;
+		this.desRecId = desRecId;
+		this.desMfkId = desMfkId;
+		this.desMakId = desMakId;
+		this.desNum = desNum;
+		this.desExpirationDate = desExpirationDate;
+		this.desUser = desUser;
+		this.desRecordDate = desRecordDate;
+		this.desDescription = desDescription;
+		this.desRequire = desRequire;
+	}
+
+	public ConfigMajorDesignation() {
+		super();
+	}
+    
 }

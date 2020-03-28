@@ -16,10 +16,9 @@ public class ConfigFileThirdServiceImp implements ConfigFileThirdService{
 	private ConfigFileThirdKindMapper mapper;
 
 	@Override
-	public List<ConfigFileThirdKind> selectAllThirdById(Integer id) {
-		String idd="0"+id;
+	public List<ConfigFileThirdKind> selectAllThirdById(String id) {
 		ConfigFileThirdKindExample exam=new ConfigFileThirdKindExample();
-		exam.createCriteria().andSecondKindIdEqualTo(idd);
+		exam.createCriteria().andSecondKindIdEqualTo(id);
 		return mapper.selectByExample(exam);
 	}
 
